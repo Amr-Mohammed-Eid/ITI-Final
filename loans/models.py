@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-# from catalog.models import Book  # ده اللي هيجيله لما ميمبر 2 يرفعه
 
 class Loan(models.Model):
     user = models.ForeignKey(
@@ -8,11 +7,7 @@ class Loan(models.Model):
         on_delete=models.CASCADE,
         related_name='loans'
     )
-    # book = models.ForeignKey(
-    #     Book,
-    #     on_delete=models.CASCADE,
-    #     related_name='loans'
-    # )
+    book_title = models.CharField(max_length=200)  # مؤقت، بدل ForeignKey للكتاب
     borrowed_at = models.DateTimeField(auto_now_add=True)
     returned_at = models.DateTimeField(null=True, blank=True)
 
@@ -20,7 +15,7 @@ class Loan(models.Model):
         ordering = ['-borrowed_at']
 
     def __str__(self):
-        return f"{self.user.username} - {self.book.title}"
+        return f"{self.user.username} - {self.book_title}"
 
     @property
     def is_active(self):
