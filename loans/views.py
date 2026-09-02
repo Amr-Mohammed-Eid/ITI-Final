@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def my_loans(request):
+    loans = []
+    return render(request, 'loans/my_loans.html', {'loans': loans})

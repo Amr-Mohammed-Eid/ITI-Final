@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}My Loans{% endblock %}
+
+{% block content %}
+<h1>My Loans</h1>
+{% if loans %}
+  <ul>
+    {% for loan in loans %}
+      <li>{{ loan }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No active loans.</p>
+{% endif %}
+{% endblock %}
