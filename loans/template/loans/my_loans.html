@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Loans</title>
+</head>
+<body>
+    <h1>My Borrowed Books</h1>
+    <ul>
+        {% for loan in loans %}
+            <li>
+                {{ loan.book.title }} - 
+                {% if loan.returned_at %}
+                    Returned on {{ loan.returned_at }}
+                {% else %}
+                    <strong>Not returned</strong>
+                    <a href="{% url 'loans:return_book' loan.id %}">Return</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No books borrowed yet.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>
