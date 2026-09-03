@@ -1,10 +1,14 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% load static %}
+
+{% block title %}Home - Warraq Digital Archives{% endblock %}
+
 {% block content %}
-<h1>Home</h1>
-{% if user.is_authenticated %}
-  <p>You are logged in as {{ user.username }}.</p>
-{% else %}
-  <p>You are not logged in.</p>
-{% endif %}
+<section class="hero">
+  <div class="hero-text-container div_sec">
+    <p class="f_p">Explore the Digital Archives</p>
+    <p class="s_p">Discover thousands of rare books and scholarly resources.</p>
+    <a href="{% url 'catalog:book_list' %}" class="hero-btn d-flex align-items-center justify-content-center">Browse Catalogue</a>
+  </div>
+</section>
 {% endblock %}
