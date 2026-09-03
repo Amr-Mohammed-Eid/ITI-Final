@@ -1,5 +1,0 @@
-python -m venv .venv
-source ./.venv/Scripts/activate
-python -m pip install Django
-python manage.py migrate
-python manage.py runserver

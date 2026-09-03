@@ -1,11 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Sign up{% endblock %}
+{% load static %}
+
+{% block title %}Warraq - Sign Up{% endblock %}
+
 {% block content %}
-<h1>Sign up</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Sign up</button>
-</form>
-<p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <img src="{% static 'images/warraq1.png' %}" alt="Warraq Logo" class="logo">
+    <h1 class="title">Warraq</h1>
+    <p class="subtitle">Register for academic access.</p>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-submit">Create Account</button>
+    </form>
+
+    <p class="footer-text">
+      Already registered? <a href="{% url 'login' %}">Return to Login</a>
+    </p>
+  </div>
+</div>
 {% endblock %}

@@ -1,23 +1,55 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}My Loans{% endblock %}
+{% block title %}My Loans - Warraq{% endblock %}
 
 {% block content %}
-<h1>My Borrowed Books</h1>
-<ul>
-  {% for loan in loans %}
-    <li>
-      {{ loan.book.title }} - 
-      {% if loan.returned_at %}
-        Returned on {{ loan.returned_at }}
-      {% else %}
-        <strong>Not returned</strong>
-        <a href="{% url 'loans:return_book' loan.id %}">Return</a>
-      {% endif %}
-    </li>
-  {% empty %}
-    <li>No books borrowed yet.</li>
-  {% endfor %}
-</ul>
-<a href="{% url 'home' %}">Back to Home</a>
+<section class="b-borrowed-section">
+  <!-- Header -->
+  <div class="b-section-header">
+    <h1>Borrowed Books</h1>
+    <p>Manage your active loans, track borrowed dates, and return books when finished.</p>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="b-tabs-bar">
+    <button class="b-tab b-active" type="button">All Loans ({{ loans|length }})</button>
+  </div>
+
+  <!-- Grid Layout -->
+  <div class="b-borrowed-grid">
+    {% for loan in loans %}
+      <div class="b-borrow-card {% if not loan.is_active %}opacity-75{% endif %}">
+        <div class="b-card-main">
+          <img class="b-book-cover" src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=400&q=80" alt="{{ loan.book.title }}">
+          <div class="b-book-info">
+            <span class="b-category">{{ loan.book.category|upper }}</span>
+            <h2 class="b-book-title">{{ loan.book.title }}</h2>
+            <p class="b-author">by {{ loan.book.author }}</p>
+            <div class="b-dates">
+              <p>Borrowed: {{ loan.borrowed_at|date:"M d, Y" }}</p>
+              {% if loan.returned_at %}
+                <p class="text-success fw-bold">Returned: {{ loan.returned_at|date:"M d, Y" }}</p>
+              {% else %}
+                <p class="b-text-warning fw-semibold">Status: Currently Active</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="b-btn-group">
+          {% if loan.is_active %}
+            <a href="{% url 'loans:return_book' loan.id %}" class="b-btn b-btn-light">Return</a>
+          {% else %}
+            <span class="b-returned-badge text-center">Returned</span>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <div class="empty-state">
+        <h3>No books borrowed yet</h3>
+        <p>Browse our <a href="{% url 'catalog:book_list' %}" style="color: var(--primary-color) !important; font-weight: bold; text-decoration: underline;">Library Catalog</a> to discover and borrow books.</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}

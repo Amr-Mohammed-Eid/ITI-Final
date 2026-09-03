@@ -1,16 +1,66 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Book Catalog{% endblock %}
+{% block title %}Library Catalog - Warraq{% endblock %}
 
 {% block content %}
-<h1>Book Catalog</h1>
-{% if books %}
-  <ul>
+<section class="catalog-section sec_2" id="catalog">
+  <div class="catalog-header">
+    <h2>Library Catalog</h2>
+    <p>Browse our extensive collection of academic texts, journals, and historical archives.</p>
+  </div>
+
+  <div class="search-container">
+    <div class="search-input-wrapper">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a7d70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" placeholder="Search by title or author...">
+      <button type="button">Search</button>
+    </div>
+    <div class="popular-tags">
+      Popular: <a href="#">Quantum Mechanics</a>, <a href="#">19th Century Literature</a>, <a href="#">Data Structures</a>
+    </div>
+  </div>
+
+  <div class="books-grid">
     {% for book in books %}
-      <li>{{ book }}</li>
+      <div class="book-card">
+        <div class="card-top">
+          <div class="image-container">
+            <img class="book-image" src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80" alt="{{ book.title }}">
+          </div>
+          <div class="book-meta">
+            <span class="category">{{ book.category|upper }}</span>
+            <svg class="category-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <h3 class="book-title">{{ book.title }}</h3>
+          <p class="book-author">by {{ book.author }}</p>
+        </div>
+        <div class="card-footer">
+          <div class="status-block {% if book.available_copies > 0 %}available{% else %}unavailable{% endif %}">
+            <span class="status-label">Status</span>
+            <span class="status-value">
+              <span class="status-dot"></span> {{ book.available_copies }} of {{ book.total_copies }} available
+            </span>
+          </div>
+          {% if book.available_copies > 0 %}
+            <a href="{% url 'loans:borrow_book' book.id %}" class="btn-borrow">Borrow &rarr;</a>
+          {% else %}
+            <button class="btn-disabled" disabled type="button">Not Available</button>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <div class="empty-state">
+        <h3>No books available in the catalog</h3>
+        <p>Please check back soon or consult a librarian.</p>
+      </div>
     {% endfor %}
-  </ul>
-{% else %}
-  <p>No books available.</p>
-{% endif %}
+  </div>
+</section>
 {% endblock %}
