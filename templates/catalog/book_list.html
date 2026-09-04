@@ -16,8 +16,8 @@
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input type="text" placeholder="Search by title or author...">
-      <button type="button">Search</button>
+      <input type="text" id="catalog-search-input" placeholder="Search by title or author..." autocomplete="off">
+      <button type="button" id="catalog-search-btn">Search</button>
     </div>
     <div class="popular-tags">
       Popular: <a href="#">Quantum Mechanics</a>, <a href="#">19th Century Literature</a>, <a href="#">Data Structures</a>
@@ -63,4 +63,8 @@
     {% endfor %}
   </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/catalog-search.js' %}"></script>
 {% endblock %}

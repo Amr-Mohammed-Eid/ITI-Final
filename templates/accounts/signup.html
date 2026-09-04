@@ -10,7 +10,7 @@
     <h1 class="title">Warraq</h1>
     <p class="subtitle">Register for academic access.</p>
 
-    <form method="post">
+    <form method="post" id="signup-form" novalidate>
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit" class="btn-submit">Create Account</button>
@@ -21,4 +21,8 @@
     </p>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/signup-validation.js' %}"></script>
 {% endblock %}
